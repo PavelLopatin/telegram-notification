@@ -12,7 +12,7 @@ async def main():
 
     dp = Dispatcher(storage=MemoryStorage())
     dp.include_router(router)
-
+    await bot.delete_webhook(drop_pending_updates=True)
     start_scheduler()
 
     print("🤖 Бот запущен (polling)")

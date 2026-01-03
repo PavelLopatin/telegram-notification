@@ -1,0 +1,35 @@
+services:
+  app:
+    build:
+      context: ./src
+      dockerfile: Dockerfile
+    depends_on:
+      - redis
+    restart: on-failure
+    env_file:
+      - .env
+
+  redis:
+    image: redis:latest
+    command: redis-server --requirepass ${REDIS_PASSWORD}
+    volumes:
+      - redis-data:/data
+    restart: always
+    ports:
+      - "6379:6379"
+
+  redis_commander:
+    image: rediscommander/redis-commander:latest
+    restart: always
+    depends_on:
+      - redis
+    environment:
+      REDIS_HOST: redis
+      REDIS_PASSWORD: ${REDIS_PASSWORD}
+      REDIS_PORT: ${REDIS_PORT}
+    ports:
+      - "8081:8081"
+
+volumes:
+  redis-data:
+    external: false
