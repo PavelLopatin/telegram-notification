@@ -1,0 +1,5 @@
+dotenv
+redis==7.1.0
+aiogram==3.24.0
+pydantic_settings==2.11.0
+APScheduler==3.11.2
